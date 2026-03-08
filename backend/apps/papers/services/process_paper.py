@@ -5,9 +5,9 @@ from .ai.generate_answers import generate_answer
 
 
 def process_question_paper(paper):
-    file_path = paper.file.path
-    text = extract_text_from_pdf(file_path)
-    questions = extract_questions(text)
+    file_path = paper.file.path # The physical file location on the server.
+    text = extract_text_from_pdf(file_path) # Extracts the text from pdf.
+    questions = extract_questions(text) # Extracts the questions from the extracted text.
 
     for q in questions:
         answer = generate_answer(q["text"], q["marks"])
@@ -19,5 +19,5 @@ def process_question_paper(paper):
             answer=answer,
         )
 
-    paper.status = "processed"
-    paper.save()
+    paper.status = "processed" # For indicating the paper has finished processing.
+    paper.save() # Saves the paper in the db.

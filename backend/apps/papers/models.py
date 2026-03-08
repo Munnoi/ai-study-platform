@@ -21,3 +21,12 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question_text
+
+class Flashcard(models.Model):
+    question_paper = models.ForeignKey(QuestionPaper, on_delete=models.CASCADE, related_name='flashcards')
+    front = models.TextField()
+    back = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.front[:50]

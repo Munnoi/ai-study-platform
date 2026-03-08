@@ -21,7 +21,7 @@ interface Paper {
 }
 
 export default function PaperDetailPage() {
-  const { id } = useParams();
+  const { id } = useParams(); // Reads the id from url params.
   const router = useRouter();
   const [paper, setPaper] = useState<Paper | null>(null);
   const [error, setError] = useState("");
@@ -29,7 +29,7 @@ export default function PaperDetailPage() {
   async function handleDelete() {
     if (!confirm("Delete this paper and all its questions?")) return;
     await fetch(`/api/papers/${id}/`, { method: "DELETE" });
-    router.push("/papers");
+    router.push("/papers"); // Redirects to /papers after deletion.
   }
 
   useEffect(() => {
@@ -53,6 +53,12 @@ export default function PaperDetailPage() {
       <header className="flex items-center justify-between px-8 py-4 bg-white shadow-sm">
         <h1 className="text-xl font-bold text-gray-900">AI Study Platform</h1>
         <div className="flex items-center gap-3">
+          <Link
+            href={`/papers/${id}/flashcards`}
+            className="px-4 py-2 text-sm font-medium text-indigo-600 hover:bg-indigo-50 border border-indigo-200 rounded-lg transition-colors"
+          >
+            Flashcards
+          </Link>
           <button
             onClick={handleDelete}
             className="px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 border border-red-200 rounded-lg transition-colors"

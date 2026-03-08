@@ -13,22 +13,21 @@ export async function GET(
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const { id } = await params; // Gets the id from url params.
+    const { id } = await params; // Reads id from url params.
 
-    // Sends a req to the backend.
-    const backendRes = await fetch(`${API_BASE}/api/papers/${id}/`, {
+    // Sends a get req to the backend.
+    const backendRes = await fetch(`${API_BASE}/api/papers/${id}/flashcards/`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    const data = await backendRes.json(); // Gets the data from the backend.
-    return NextResponse.json(data, { status: backendRes.status }); // Returns the response to the frontend.
-    
+    const data = await backendRes.json(); // Reads the backend resp.
+    return NextResponse.json(data, { status: backendRes.status }); // Sends the backend resp to the frontend.
   } catch {
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }
 
-export async function DELETE(
+export async function POST(
   _req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -40,15 +39,11 @@ export async function DELETE(
 
     const { id } = await params;
 
-    // Sends a delete req to the backend.
-    const backendRes = await fetch(`${API_BASE}/api/papers/${id}/`, {
-      method: "DELETE",
+    // Sends a post req to the backend.
+    const backendRes = await fetch(`${API_BASE}/api/papers/${id}/flashcards/`, {
+      method: "POST",
       headers: { Authorization: `Bearer ${token}` },
     });
-
-    if (backendRes.status === 204) {
-      return new NextResponse(null, { status: 204 }); // Status no content.
-    }
 
     const data = await backendRes.json();
     return NextResponse.json(data, { status: backendRes.status });

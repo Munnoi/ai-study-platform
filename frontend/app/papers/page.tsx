@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
+// Interface as same as the Question model in the backend.
 interface Question {
   id: number;
   question_number: number;
@@ -11,6 +12,7 @@ interface Question {
   marks: number | null;
 }
 
+// Interface as same as the QuestionPaper model in the backend.
 interface Paper {
   id: number;
   title: string;
@@ -29,14 +31,14 @@ export default function PapersPage() {
   const [deleting, setDeleting] = useState<number | null>(null);
 
   useEffect(() => {
-    fetchPapers();
+    fetchPapers(); // Load papers on page start.
   }, []);
 
   async function fetchPapers() {
     try {
-      const res = await fetch("/api/papers/list/");
+      const res = await fetch("/api/papers/list/"); // Fetches papers from backend.
       if (res.ok) {
-        setPapers(await res.json());
+        setPapers(await res.json()); // If success, the papers are stored.
       }
     } catch {}
   }
@@ -45,8 +47,8 @@ export default function PapersPage() {
     if (!confirm("Delete this paper and all its questions?")) return;
     setDeleting(id);
     try {
-      await fetch(`/api/papers/${id}/`, { method: "DELETE" });
-      setPapers((prev) => prev.filter((p) => p.id !== id));
+      await fetch(`/api/papers/${id}/`, { method: "DELETE" }); // Sends delete req.
+      setPapers((prev) => prev.filter((p) => p.id !== id)); // Removes deleted paper from frontend.
       if (paper?.id === id) setPaper(null);
     } catch {} finally {
       setDeleting(null);
@@ -55,7 +57,7 @@ export default function PapersPage() {
 
   async function handleUpload(e: React.FormEvent) {
     e.preventDefault();
-    if (!file || !title) return;
+    if (!file || !title) return; // If don't have title or file.
 
     setLoading(true);
     setError("");
@@ -66,6 +68,7 @@ export default function PapersPage() {
     formData.append("title", title);
 
     try {
+      // Sends data to the endpoint.
       const res = await fetch("/api/papers/upload/", {
         method: "POST",
         body: formData,
@@ -78,7 +81,7 @@ export default function PapersPage() {
         return;
       }
 
-      setPaper(data);
+      setPaper(data); // Sets the returned data.
       setTitle("");
       setFile(null);
       fetchPapers();

@@ -27,6 +27,6 @@ def generate_answer(question_text: str, marks: int | None = None) -> str:
                 {'role': 'user', 'content': f'{length_hint}\n\n{question_text}'},
             ],
         )
-        return response.choices[0].message.content
+        return response.choices[0].message.content # Ensures the func only returns the answer.
     except Exception:
         return ''
