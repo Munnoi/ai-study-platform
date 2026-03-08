@@ -8,9 +8,9 @@ export default async function ProtectedLayout({
 }) {
     const token = (await cookies()).get("token")?.value;
 
-  if (!token) {
+  if (!token) { // If token is not present in the cookie, redirect to /login
     redirect("/login");
   }
 
-  return <>{children}</>;
+  return <>{children}</>; // Render the children if token is present
 }

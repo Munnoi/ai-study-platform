@@ -37,10 +37,21 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1>Register Page</h1>
-      {error && <p className="text-red-500">{error}</p>}
-      <Form onSubmit={onSubmitHandler} page="register" />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
+      <div className="w-full max-w-md">
+        <div className="bg-white rounded-2xl shadow-lg p-8">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-900">Create Account</h1>
+            <p className="text-gray-500 mt-2">Get started with your free account</p>
+          </div>
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg p-3 mb-4">
+              {error}
+            </div>
+          )}
+          <Form onSubmit={onSubmitHandler} page="register" />
+        </div>
+      </div>
     </div>
   );
 }
