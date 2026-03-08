@@ -1,6 +1,7 @@
 from apps.papers.models import Question
 from .ocr.extract_text import extract_text_from_pdf
 from .question_parser.detect_questions import extract_questions
+from .ai.generate_answers import generate_answer
 
 
 def process_question_paper(paper):
@@ -9,12 +10,14 @@ def process_question_paper(paper):
     questions = extract_questions(text)
 
     for q in questions:
+        answer = generate_answer(q["text"], q["marks"])
         Question.objects.create(
-            paper=paper,
-            number=q["number"],
-            text=q["text"],
-            marks=q["marks"]
+            question_paper=paper,
+            question_number=q["number"],
+            question_text=q["text"],
+            marks=q["marks"],
+            answer=answer,
         )
 
-    paper.status = "processing"
+    paper.status = "processed"
     paper.save()

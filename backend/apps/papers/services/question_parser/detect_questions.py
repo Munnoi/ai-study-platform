@@ -1,6 +1,5 @@
 import re
 
-
 def extract_questions(text):
     questions = []
 

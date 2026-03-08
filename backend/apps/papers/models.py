@@ -14,6 +14,7 @@ class QuestionPaper(models.Model):
 class Question(models.Model):
     question_paper = models.ForeignKey(QuestionPaper, on_delete=models.CASCADE, related_name='questions')
     question_text = models.TextField()
+    answer = models.TextField(blank=True, default='')
     marks = models.IntegerField(null=True, blank=True)
     question_number = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
