@@ -7,7 +7,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class QuestionPaperSerializer(serializers.ModelSerializer):
-    questions = QuestionSerializer(many=True, read_only=True)
+    questions = QuestionSerializer(many=True, read_only=True) # questions field on QuestionPaperSerializer should be represented using QuestionSerializer, as a list, and only for output.
     class Meta:
         model = QuestionPaper
         fields = '__all__'
