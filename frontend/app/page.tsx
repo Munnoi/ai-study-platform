@@ -2,7 +2,21 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { ModeToggle } from "@/components/ui/mode-toggle";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import Image from "next/image";
 import Link from "next/link";
+import { Github } from "lucide-react";
 
 interface Question {
   id: number;
@@ -38,60 +52,102 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <header className="flex items-center justify-between px-8 py-4 bg-white shadow-sm">
-        <h1 className="text-xl font-bold text-gray-900">AI Study Platform</h1>
-        <button
-          onClick={handleLogout}
-          className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-white hover:bg-red-500 border border-gray-300 hover:border-transparent rounded-lg transition-colors duration-200"
-        >
-          Logout
-        </button>
-      </header>
-      <main className="max-w-3xl mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Welcome back!</h2>
-          <p className="text-gray-500 text-lg mb-8">Your AI-powered study dashboard</p>
-          <Link
-            href="/papers"
-            className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors"
-          >
-            Upload Question Paper
-          </Link>
+    <div>
+      <header className="flex flex-row justify-between px-4 py-2">
+        <div>
+          <h1 className="text-2xl">CheetSheet</h1>
         </div>
-
-        {papers.length > 0 && (
-          <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              Recent Papers
-            </h3>
-            <div className="space-y-3">
-              {papers.map((p) => (
-                <Link
-                  key={p.id}
-                  href={`/papers/${p.id}`}
-                  className="block bg-white rounded-xl shadow-sm p-5 hover:shadow-md transition-shadow"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-semibold text-gray-900">
-                        {p.title}
-                      </h4>
-                      <p className="text-sm text-gray-500 mt-1">
-                        {p.questions.length} questions &middot;{" "}
-                        {new Date(p.uploaded_at).toLocaleDateString()}
-                      </p>
-                    </div>
-                    <span className="px-3 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
-                      {p.status}
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
+        <nav className="flex flex-row gap-4 items-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              className={buttonVariants({ variant: "outline" })}
+            >
+              Kannan
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-40" align="start">
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuItem>
+                  Profile
+                  <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  Settings
+                  <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem>GitHub</DropdownMenuItem>
+                <DropdownMenuItem>Support</DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem onClick={handleLogout}>
+                  Log out
+                  <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <ModeToggle />
+        </nav>
+      </header>
+      <main className="flex flex-col gap-4 p-4 items-center justify-center min-h-[calc(100vh-4rem)]">
+        <div className="flex flex-row gap-4 items-center text-4xl md:text-6xl tracking-tight font-bold mb-4">
+          <h2>Understand </h2>
+          <h2 className="text-primary">Anything</h2>
+        </div>
+        <p className="text-muted-foreground">
+          Research, understand and solve any question with the help of AI.
+          Create your own cheatsheet for any question paper.
+        </p>
+        <div className="flex flex-row items-center justify-center gap-4 w-full">
+          <Button className="text-lg min-w-36 font-light">Try it</Button>
+          <Button
+            variant={"outline"}
+            className="text-lg min-w-36 font-extralight"
+          >
+            Prizing
+          </Button>
+        </div>
       </main>
+      {/* showing its features */}
+      <section className="flex flex-col gap-4 p-4 items-center justify-evenly">
+        <h2 className="text-3xl font-semibold mb-4">Features of CheetSheet</h2>
+        <div className="flex flex-row gap-2 flex-wrap">
+          <div className="flex flex-col gap-2 max-w-sm">
+            <h3 className="text-xl">Upload your Source or Enable Web Search</h3>
+            <p className="text-muted-foreground">
+              Upload PDFs, images or even videos as your source material.
+              CheetSheet will read and understand the context and answer your
+              questions based on that. You can also enable web search to get
+              answers from the internet.
+            </p>
+          </div>
+          <div>
+            <Image
+              src="/std.jpg"
+              alt="Feature Preview"
+              width={400}
+              height={200}
+            />
+          </div>
+        </div>
+      </section>
+      <footer>
+        <div className="flex items-center justify-end gap-2 p-4">
+          <Link
+            href="https://github.com/Munnoi/ai-study-platform"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Github className="inline-block mr-1" size={16} />
+            GitHub
+          </Link>
+          <p className="text-sm text-muted-foreground">| made by K & K</p>
+        </div>
+      </footer>
     </div>
   );
 }
