@@ -15,6 +15,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
+import Link from "next/link";
+import { Github } from "lucide-react";
 
 interface Question {
   id: number;
@@ -113,7 +115,7 @@ export default function Home() {
       {/* showing its features */}
       <section className="flex flex-col gap-4 p-4 items-center justify-evenly">
         <h2 className="text-3xl font-semibold mb-4">Features of CheetSheet</h2>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 flex-wrap">
           <div className="flex flex-col gap-2 max-w-sm">
             <h3 className="text-xl">Upload your Source or Enable Web Search</h3>
             <p className="text-muted-foreground">
@@ -133,6 +135,19 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <footer>
+        <div className="flex items-center justify-end gap-2 p-4">
+          <Link
+            href="https://github.com/Munnoi/ai-study-platform"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Github className="inline-block mr-1" size={16} />
+            GitHub
+          </Link>
+          <p className="text-sm text-muted-foreground">| made by K & K</p>
+        </div>
+      </footer>
     </div>
   );
 }
