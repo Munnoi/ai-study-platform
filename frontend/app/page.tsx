@@ -2,10 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import {
   DropdownMenu,
@@ -13,14 +10,11 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Image from "next/image";
 
 interface Question {
   id: number;
@@ -107,12 +101,38 @@ export default function Home() {
           Create your own cheatsheet for any question paper.
         </p>
         <div className="flex flex-row items-center justify-center gap-4 w-full">
-          <Button className="text-lg min-w-36">Try it</Button>
-          <Button variant={"outline"} className="text-lg min-w-36">
+          <Button className="text-lg min-w-36 font-light">Try it</Button>
+          <Button
+            variant={"outline"}
+            className="text-lg min-w-36 font-extralight"
+          >
             Prizing
           </Button>
         </div>
       </main>
+      {/* showing its features */}
+      <section className="flex flex-col gap-4 p-4 items-center justify-evenly">
+        <h2 className="text-3xl font-semibold mb-4">Features of CheetSheet</h2>
+        <div className="flex flex-row gap-2">
+          <div className="flex flex-col gap-2 max-w-sm">
+            <h3 className="text-xl">Upload your Source or Enable Web Search</h3>
+            <p className="text-muted-foreground">
+              Upload PDFs, images or even videos as your source material.
+              CheetSheet will read and understand the context and answer your
+              questions based on that. You can also enable web search to get
+              answers from the internet.
+            </p>
+          </div>
+          <div>
+            <Image
+              src="/std.jpg"
+              alt="Feature Preview"
+              width={400}
+              height={200}
+            />
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
